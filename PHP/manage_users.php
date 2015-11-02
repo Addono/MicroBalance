@@ -2,6 +2,8 @@
 // Prevent users from directly accessing this page.
 defined( 'ABSPATH' ) or die( 'Not Even Close, Baby' );
 
+echo "<h1>User manager</h1>\n";
+
 global $wpdb;
 
 $table_name = $wpdb->prefix . 'mb_users';
@@ -34,19 +36,22 @@ foreach($users as $user) {
     
     $result = $wpdb->get_results("SELECT * FROM wp_mb_users WHERE id = '$user->ID';");
     
-    if(count($result) == 0) { // If the user doesn't exist in the MB user table, create it.
-        $message = add_MB_user($user);
-        $messages[] = "[INFO] User " . $message . "added";
-    } elseif(count($result) > 1) {
+    if(count($result) > 1) {
         $message[] = "[ERROR] Multiple entries for $user->ID";
     } else {
+        if(count($result) == 0) { // If the user doesn't exist in the MB user table, create it.
+            $message = add_MB_user($user);
+            $result = $wpdb->get_results("SELECT * FROM wp_mb_users WHERE id = '$user->ID';");
+            $messages[] = "[INFO] User " . $message . "added";
+        }
+        
         $cells = [
             [$user->ID, false],
             [$user->user_login, false],
             [$user->user_email, 'wp-admin-edit', 'email'],
             [$user->user_firstname, 'wp-admin-add','first_name'],
             [$user->user_lastname, 'wp-admin-add', 'last_name'],
-            [$result[0]->role, false],
+            [ucfirst($result[0]->role), false],
             ["&euro;" . $result[0]->balance, false],
             ["&euro;" . $result[0]->till, false]
         ];
@@ -78,7 +83,9 @@ foreach($users as $user) {
     echo "</tr>\n";
 }
 
-echo "</table>";
+echo "</table>\n<br>\n";
+
+redirect_button("New user",admin_url() . "user-new.php", 'primary');
 
 function add_MB_user($user) {
     global $wpdb;
@@ -115,7 +122,7 @@ function add_MB_user($user) {
 }
 
 if(count($messages) != 0) {
-    echo "\n<h1>Messages</h1>";
+    echo "\n<h2>System</h2>";
     
     foreach($messages as $message) {
         echo "$message<br>\n";
