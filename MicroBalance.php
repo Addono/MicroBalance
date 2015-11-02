@@ -84,8 +84,8 @@ function format($string) {
 }
 
 // Returns a button which acts as link when clicked.
-function redirect_button($title, $target = "") {
+function redirect_button($title, $target = "", $type = "secondary") {
     echo "<form method='post' action='$target'>\n";
-    submit_button($title, 'secondary', 'submit', false);
+    submit_button($title, $type, 'submit', false);
     echo "\n</form>\n";
 }
