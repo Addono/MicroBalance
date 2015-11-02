@@ -21,34 +21,42 @@ foreach($users as $user) {
     $result = $wpdb->get_results("SELECT * FROM wp_mb_users WHERE id = '$user->ID';");
     
     if(count($result) == 0) { // If the user doesn't exist in the MB user table, create it.
-        $id = $user->ID;
-        $firstname = $user->user_firstname;
-        $lastname = $user->user_lastname;
-        $nickname = $user->user_login;
-        
-        $userdata = [
-            'id' => $id,
-            'firstname' => $firstname,
-            'lastname' => $lastname
-        ];
-        
-        $wpdb->insert($table_name,$userdata);
-        
-        $user_add_message = "";
-        
-        if($firstname != "") {
-            $user_add_message .= $firstname . " ";
-        }
-        
-        if($lastname != "") {
+        $message = add_MB_user($user);
+        echo "<p>$message added</p>";
+    }
+}
+
+function add_MB_user($user) {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'mb_users';;
+    
+    $id = $user->ID;
+    $firstname = $user->user_firstname;
+    $lastname = $user->user_lastname;
+    $nickname = $user->user_login;
+    
+    $userdata = [
+        'id' => $id,
+        'firstname' => $firstname,
+        'lastname' => $lastname
+            ];
+            
+    $wpdb->insert($table_name,$userdata);
+    
+    $user_add_message = "";
+    
+    if($firstname != "") {
+        $user_add_message .= $firstname . " ";
+    }
+            
+    if($lastname != "") {
             $user_add_message .= $lastname . " ";
         }
         
-        if($nickname != "") {
+    if($nickname != "") {
             $user_add_message .= "($nickname) ";
         }
-        
-        echo "<p>$user_add_message added</p>";
-    }
+            
+    return $user_add_message;
 }
 ?>

@@ -55,7 +55,7 @@ function settings_page() {
     
 }
 
-function add_mb_user() {
+function add_new_mb_user() {
     require_once("PHP/add_user.php");
 }
 
