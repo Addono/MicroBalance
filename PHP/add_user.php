@@ -43,4 +43,6 @@ if($firstname=="") {
     submit_button("Add another one");
     echo "</form>";
 }
+
+print_r(get_users());
 ?>
