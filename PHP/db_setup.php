@@ -33,7 +33,7 @@ $sql = "
         amount float(5,2) NOT NULL,
         description tinytext,
         type ENUM('purchase', 'decleration', 'payout', 'refund', 'unknown', 'error') DEFAULT 'error' NOT NULL,
-        state ENUM('new', 'unapproved', 'confirmed', 'finished', 'error', 'canceled') DEFAULT 'error' NOT NULL,
+        state ENUM('new', 'unapproved', 'confirmed', 'finished', 'canceled', 'error') DEFAULT 'error' NOT NULL,
         method ENUM('internal', 'cash', 'deposit')
     ) $charset_collate;
     ";
