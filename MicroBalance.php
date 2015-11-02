@@ -77,6 +77,12 @@ function manage_users() {
     require_once("PHP/manage_users.php");
 }
 
+add_action( 'plugins_loaded', 'my_plugin_load_plugin_textdomain' );
+
+function my_plugin_load_plugin_textdomain() {
+    load_plugin_textdomain( 'MicroBalance', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
+}
+
 // Non hook-functions here
 
 function format($string) {

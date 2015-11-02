@@ -1,0 +1,68 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl_NL\n"
+"X-Generator: Poedit 1.8.6\n"
+
+msgid "Hello"
+msgstr "Hallo"
+
+msgid "User manager"
+msgstr "Gebruikers beheerder"
+
+msgid "Login name"
+msgstr "Inlog naam"
+
+msgid "First name"
+msgstr "Voornaam"
+
+msgid "Last name"
+msgstr "Achternaam"
+
+msgid "Role"
+msgstr "Rol"
+
+msgid "User"
+msgstr "Gebruiker"
+
+msgid "user"
+msgstr "gebruiker"
+
+msgid "till"
+msgstr "kas"
+
+msgid "Balance"
+msgstr "Tegoed"
+
+msgid "till manager"
+msgstr "kas beheerder"
+
+msgid "Till balance"
+msgstr "Kas tegoed"
+
+msgctxt "add-data"
+msgid "Add"
+msgstr "Toevoegen"
+
+msgctxt "add-money"
+msgid "Add"
+msgstr "Opwaarderen"
+
+msgid "New user"
+msgstr "Nieuwe gebruiker"
+
+msgid "ID"
+msgstr "Id"
+
+msgid "Message"
+msgstr "Bericht"
+
+msgid "Messages"
+msgstr "Berichten"

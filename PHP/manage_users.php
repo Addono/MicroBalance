@@ -2,7 +2,7 @@
 // Prevent users from directly accessing this page.
 defined( 'ABSPATH' ) or die( 'Not Even Close, Baby' );
 
-echo "<h1>User manager</h1>\n";
+echo "<h1>" . __('User manager', "MicroBalance") . "</h1>\n";
 
 global $wpdb;
 
@@ -14,17 +14,21 @@ require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
 $users = get_users();
 
+/*
+ * @Description: Creates the table containing shoing information of all users.
+ */
 echo "<table>\n";
 
 $colums = [
-    'ID',
-    'Login name',
-    'Email',
-    'First name',
-    'Last name',
-    'Role',
-    'Balance',
-    'Till balance'
+    __('ID', "MicroBalance"),
+    __('Login name', "MicroBalance"),
+    __('Email', "MicroBalance"),
+    __('First name', "MicroBalance"),
+    __('Last name', "MicroBalance"),
+    __('Role', "MicroBalance"),
+    __('Balance', "MicroBalance"),
+    __('Till balance', "MicroBalance"),
+    _x('Add', "add-money", "MicroBalance")
 ];
 
 foreach($colums as $colum) {
@@ -45,17 +49,20 @@ foreach($users as $user) {
             $messages[] = "[INFO] User " . $message . "added";
         }
         
+        // Stores all the data of the content of cells in every row.
         $cells = [
             [$user->ID, false],
             [$user->user_login, false],
             [$user->user_email, 'wp-admin-edit', 'email'],
             [$user->user_firstname, 'wp-admin-add','first_name'],
             [$user->user_lastname, 'wp-admin-add', 'last_name'],
-            [ucfirst($result[0]->role), false],
+            [ucfirst(__($result[0]->role,"MicroBalance")), false],
             ["&euro;" . $result[0]->balance, false],
-            ["&euro;" . $result[0]->till, false]
+            ["&euro;" . $result[0]->till, false],
+            [""]
         ];
         
+        // Create all the cells from the array
         foreach($cells as $cell) {
             echo "<td>";
             if($cell[0] != "")  {
@@ -67,7 +74,11 @@ foreach($users as $user) {
             } else {
                 switch($cell[1]) {
                     case 'wp-admin-add':
-                        redirect_button("Add",admin_url() . "user-edit.php?user_id=" . $user->ID . "#" . $cell[2]);
+                        redirect_button(_x("Add", "add-data", "MicroBalance"),admin_url() . "user-edit.php?user_id=" . $user->ID . "#" . $cell[2]);
+                        break;
+                    
+                    case 'add':
+                        
                         break;
                     
                     default:
@@ -85,7 +96,7 @@ foreach($users as $user) {
 
 echo "</table>\n<br>\n";
 
-redirect_button("New user",admin_url() . "user-new.php", 'primary');
+redirect_button(__("New user","MicroBalance"), admin_url() . "user-new.php", 'primary');
 
 function add_MB_user($user) {
     global $wpdb;
@@ -121,8 +132,12 @@ function add_MB_user($user) {
     return $user_add_message;
 }
 
+
+/*
+ * @Description: Shows all messages generated earlier.
+ */
 if(count($messages) != 0) {
-    echo "\n<h2>System</h2>";
+    echo "\n<h2>" . _n('Message', 'Messages', count($messages), "MicroBalance") . "</h2>";
     
     foreach($messages as $message) {
         echo "$message<br>\n";
