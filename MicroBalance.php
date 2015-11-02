@@ -55,7 +55,7 @@ function settings_page() {
 }
 
 function add_mb_user() {
-    require_once("add_user.php");
+    require_once("PHP/add_user.php");
 }
 
 add_action('admin_init', 'set_settings');
@@ -69,7 +69,7 @@ function set_settings() {
 register_activation_hook(__FILE__, 'db_setup');
 
 function db_setup() {
-    require("db_setup.php");
+    require("PHP/db_setup.php");
 }
 
 // Non hook-functions here
