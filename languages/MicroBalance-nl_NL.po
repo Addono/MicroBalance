@@ -11,6 +11,9 @@ msgstr ""
 "Language: nl_NL\n"
 "X-Generator: Poedit 1.8.6\n"
 
+msgid "Manage users"
+msgstr "Beheer gebruikers"
+
 msgid "Hello"
 msgstr "Hallo"
 
