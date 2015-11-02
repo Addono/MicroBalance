@@ -13,7 +13,7 @@ $sql = "CREATE TABLE $table_name (
     creationtime datetime DEFAULT NOW() NOT NULL,
     firstname tinytext NOT NULL,
     lastname tinytext,
-    balance float(10,2) DEFAULT '0',
+    balance float(10,2) DEFAULT '0' NOT NULL,
     UNIQUE KEY id (id)
     ) $charset_collate;";
 
