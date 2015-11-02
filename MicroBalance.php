@@ -16,8 +16,8 @@ add_action('admin_menu', 'my_plugin_menu');
 
 function my_plugin_menu() {
     //add_menu_page('MicroBalance Admin Panel', 'Microbalance Admin Panel', 'administrator', 'MicroBalance-settings', 'settings_page', 'dashicons-admin-generic');
-    add_menu_page('Add user', 'Microbalance - Add user', 'administrator', 'MicroBalance-add-user', 'add_mb_user', 'dashicons-admin-generic');
-    add_menu_page('Add user', 'Microbalance - Manage users', 'administrator', 'MicroBalance-manage-users', 'manage_users', 'dashicons-admin-generic');
+    //add_menu_page('Add user', 'Microbalance - Add user', 'administrator', 'MicroBalance-add-user', 'add_mb_user', 'dashicons-admin-generic');
+    add_menu_page('Manage users', 'Microbalance - Manage users', 'administrator', 'MicroBalance-manage-users', 'manage_users', 'dashicons-admin-generic');
     //add_menu_page('Add user', 'Microbalance - Build DB', 'administrator', 'MicroBalance-db-setup', 'db_setup', 'dashicons-admin-generic');
 }
     
@@ -81,4 +81,11 @@ function manage_users() {
 
 function format($string) {
     return ucfirst(strtolower($string));
+}
+
+// Returns a button which acts as link when clicked.
+function redirect_button($title, $target = "") {
+    echo "<form method='post' action='$target'>\n";
+    submit_button($title, 'secondary', 'submit', false);
+    echo "\n</form>\n";
 }

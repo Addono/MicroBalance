@@ -12,19 +12,73 @@ require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
 $users = get_users();
 
+echo "<table>\n";
+
+$colums = [
+    'ID',
+    'Login name',
+    'Email',
+    'First name',
+    'Last name',
+    'Role',
+    'Balance',
+    'Till balance'
+];
+
+foreach($colums as $colum) {
+    echo "\t<td><b>$colum</b></td>\n";
+}
+
 foreach($users as $user) {
-    echo "<p>";
-    //var_dump($user);
-    echo "'" . $user->user_login . "'   ";
-    echo $user->ID;
+    echo "<tr>\n";
     
     $result = $wpdb->get_results("SELECT * FROM wp_mb_users WHERE id = '$user->ID';");
     
     if(count($result) == 0) { // If the user doesn't exist in the MB user table, create it.
         $message = add_MB_user($user);
-        $messages[] = "User " . $message . "added";
+        $messages[] = "[INFO] User " . $message . "added";
+    } elseif(count($result) > 1) {
+        $message[] = "[ERROR] Multiple entries for $user->ID";
+    } else {
+        $cells = [
+            [$user->ID, false],
+            [$user->user_login, false],
+            [$user->user_email, 'wp-admin-edit', 'email'],
+            [$user->user_firstname, 'wp-admin-add','first_name'],
+            [$user->user_lastname, 'wp-admin-add', 'last_name'],
+            [$result[0]->role, false],
+            ["&euro;" . $result[0]->balance, false],
+            ["&euro;" . $result[0]->till, false]
+        ];
+        
+        foreach($cells as $cell) {
+            echo "<td>";
+            if($cell[0] != "")  {
+                if($cell[1] == 'wp-admin-edit' || $cell[1] == 'wp-admin-add') {
+                    echo "<a href ='" . admin_url() . "user-edit.php?user_id=" . $user->ID . "#" . $cell[2] . "'>$cell[0]</a>";
+                } else {
+                    echo $cell[0];
+                }
+            } else {
+                switch($cell[1]) {
+                    case 'wp-admin-add':
+                        redirect_button("Add",admin_url() . "user-edit.php?user_id=" . $user->ID . "#" . $cell[2]);
+                        break;
+                    
+                    default:
+                        echo "<td>";
+                        break;
+                }
+            }
+        }
+        
+        echo "</td>\n";
     }
+    
+    echo "</tr>\n";
 }
+
+echo "</table>";
 
 function add_MB_user($user) {
     global $wpdb;
@@ -64,7 +118,7 @@ if(count($messages) != 0) {
     echo "\n<h1>Messages</h1>";
     
     foreach($messages as $message) {
-        echo "<p>$message</p>\n";
+        echo "$message<br>\n";
     }
 }
 ?>
