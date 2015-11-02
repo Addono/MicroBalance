@@ -6,7 +6,7 @@ defined( 'ABSPATH' ) or die( 'Not Even Close, Baby!' );
  * Plugin Name: MicroBalance
  * Plugin URI: 
  * Description: 
- * Version: 0.0.1
+ * Version: 0.0.3
  * Author: Adriaan Knapen <a.d.knapen@student.tue.nl>
  * Author URI: 
  * License: 
@@ -17,6 +17,7 @@ add_action('admin_menu', 'my_plugin_menu');
 function my_plugin_menu() {
     //add_menu_page('MicroBalance Admin Panel', 'Microbalance Admin Panel', 'administrator', 'MicroBalance-settings', 'settings_page', 'dashicons-admin-generic');
     add_menu_page('Add user', 'Microbalance - Add user', 'administrator', 'MicroBalance-add-user', 'add_mb_user', 'dashicons-admin-generic');
+    add_menu_page('Add user', 'Microbalance - Manage users', 'administrator', 'MicroBalance-manage-users', 'manage_users', 'dashicons-admin-generic');
     //add_menu_page('Add user', 'Microbalance - Build DB', 'administrator', 'MicroBalance-db-setup', 'db_setup', 'dashicons-admin-generic');
 }
     
@@ -70,6 +71,10 @@ register_activation_hook(__FILE__, 'db_setup');
 
 function db_setup() {
     require("PHP/db_setup.php");
+}
+
+function manage_users() {
+    require_once("PHP/manage_users.php");
 }
 
 // Non hook-functions here
