@@ -92,6 +92,71 @@ function redirect_button($title, $target = "", $type = "secondary") {
     echo "<form method='post' action='$target'>\n";
     submit_button($title, $type, 'submit', false);
     echo "\n</form>\n";
+}
+
+function new_inventory_purchase($debtor_id, $amount, $description = "", $authorid = "") {
+    global $wpdb;
+    $transaction_table = get_table('transaction');
+    
+    if($amount <= 0) {
+        return -1; // Inventory value has to increase. Else throw error.
+    }
+    
+    if($authorid == "") {
+        $authorid = get_current_user_id();
+    }
+    
+    $data = [
+        'type' => 'inventory purchase',
+        'state' => 'new',
+        'description' => $description,
+        'authorid' => $authorid
+    ];
+    
+    $wpdb->insert($transaction_table,$data);
+    
+    $id = $wpdb->insert_id;
+    
+    $inventory_journal_id = new_journal($amount, 0, 'debit', $id);           // Create journal entry for the inventory.
+    $debtor_journal_id = new_journal(-$amount, $debtor_id, 'credit', $id);   // Create journal entry for the debtor.
+    
+    if($inventory_journal_id > 0 && $debtor_journal_id > 0) {
+        $data = [
+            'state' => 'unapproved'
+        ];
+    } else {
+        $data = [
+            'state' => 'error'
+        ];
+    }
+    
+    $wpdb->update($transaction_table, $data, array('transactionid' => $id));
+    
+    if($data['state'] == 'error') {
+        $wpdb->update($transaction_table,array('state' => 'error'), array('transactionid' => $id));
+        return -2;
+    }
+    
+    if(!pay_journal($inventory_journal_id) || !pay_journal($debtor_journal_id)) {
+        change_transaction_state($id, 'error');
+        return -3;
+    } else {
+        change_transaction_state($id, 'unapproved');
+        return 1;
+    }
+}
+
+function change_transaction_state($id, $state) {
+    global $wpdb;
+    return $wpdb->update($transaction_table,array('state' => $state), array('transactionid' => $id));
+}
+
+function set_transaction_state($state) {
+    $data = [
+        'state' => $state
+    ];
+    $wpdb->update($transaction_table, $data, array('transactionid' => $id));
+}
 
 /*
  * @Desciprion: Creates a new journal entry

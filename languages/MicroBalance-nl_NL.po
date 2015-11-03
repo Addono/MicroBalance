@@ -82,3 +82,6 @@ msgstr "[Error]"
 
 msgid "Multiple entries for %s"
 msgstr "%s meerdere keren aanwezig"
+
+msgid "Couldn't add user, row insertion failed"
+msgstr "Gebruiker niet toegevoegd, invoegen rij mislukt"
