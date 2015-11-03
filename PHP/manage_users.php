@@ -5,7 +5,7 @@ defined( 'ABSPATH' ) or die( 'Not Even Close, Baby' );
 echo "<h1>" . __('User manager', "MicroBalance") . "</h1>\n";
 
 global $wpdb;
-global $user_table_name;
+global $table_name;
 
 $table_name = get_option('MB_user_table');
 $charset_collate = $wpdb->get_charset_collate();
@@ -42,13 +42,12 @@ foreach($users as $user) {
     $sql = "SELECT * FROM $table_name WHERE id = '$user->ID';";
     $result = $wpdb->get_results($sql);
     
-    if(count($result) > 1) {
-        $message[] = __("[ERROR]","MicroBalance") . sprintf(__("Multiple entries for %s"),$user->ID);
+    if(count($result) > 1) { // Check is unnecessary if the table is correctly setup.
+        $message[] = __("[ERROR]","MicroBalance") . " " . sprintf(__("Multiple entries for %s"),$user->ID);
     } else {
         if(count($result) == 0) { // If the user doesn't exist in the MB user table, create it.
-            $message = add_MB_user($user);
+            $messages[] = add_MB_user($user);
             $result = $wpdb->get_results($sql);
-            $messages[] = __("[INFO]","MicroBalance") . " " . sprintf(__("User %s added","MicroBalance"),$message);
         }
         
         // Stores all the data of the content of cells in every row.
@@ -104,8 +103,6 @@ function add_MB_user($user) {
     global $wpdb;
     global $table_name;
     
-    echo $user_table_name;
-    
     $id = $user->ID;
     $firstname = $user->user_firstname;
     $lastname = $user->user_lastname;
@@ -117,7 +114,9 @@ function add_MB_user($user) {
         'lastname' => $lastname
             ];
             
-    $wpdb->insert($table_name,$userdata);
+    if(!$wpdb->insert($table_name,$userdata)) {
+        return __("[ERROR]","MicroBalance") . " " . __("Couldn't add user, row insertion failed", "MicroBalance");
+    }
     
     $user_add_message = "";
     
@@ -132,8 +131,8 @@ function add_MB_user($user) {
     if($nickname != "") {
             $user_add_message .= "($nickname) ";
         }
-            
-    return $user_add_message;
+
+    return __("[INFO]","MicroBalance") . " " . sprintf(__("User %s added","MicroBalance"),$user_message);
 }
 
 /*
