@@ -8,6 +8,7 @@ global $wpdb;
 global $table_name;
 
 $table_name = get_option('MB_user_table');
+$table_name = get_table('user');
 $charset_collate = $wpdb->get_charset_collate();
 $messages = [];
 

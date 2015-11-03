@@ -106,6 +106,7 @@ function redirect_button($title, $target = "", $type = "secondary") {
 function new_journal($amount, $account, $cd, $transactionID) {
     global $wpdb;
     $journal_table = get_option('MB_journal_table');
+    $journal_table = get_table('journal');
     
     if($cd != 'credit' && $cd != 'debit') {
         return -2;
@@ -129,6 +130,8 @@ function pay_journal($journal_id) {
     global $wpdb;
     $journal_table = get_option('MB_journal_table');
     $users_table = get_option('MB_user_table');
+    $journal_table = get_table('journal');
+    $users_table = get_table('users');
     
     $sql = "SELECT accountid, cd, amount, payed FROM $journal_table WHERE journalid = $journal_id";
     $journal_result = $wpdb->get_row($sql);
@@ -161,5 +164,24 @@ function pay_journal($journal_id) {
     if($wpdb->update($users_table, $data, array('id' => $user_id))) {
         $date = current_time('mysql', 0);
         return $wpdb->update($journal_table, array('payed' => $date), array('journalid' => $journal_id));
+    }
+}
+
+/*
+ * @description: Returns the full name of the table.
+ * @param table: Name of the table.
+ * @returns: Full name of the table if found, false if it wasn't found.
+ */
+function get_table($table) {
+    switch($table) {
+        case 'user':
+        case 'users':
+            return get_option('MB_user_table');
+        case 'transaction':
+            return get_option('MB_transaction_table');
+        case 'journal':
+            return get_option('MB_journal_table');
+        default:
+            return false;
     }
 }
