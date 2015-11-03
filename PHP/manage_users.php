@@ -43,12 +43,12 @@ foreach($users as $user) {
     $result = $wpdb->get_results($sql);
     
     if(count($result) > 1) {
-        $message[] = "[ERROR] Multiple entries for $user->ID";
+        $message[] = __("[ERROR]","MicroBalance") . sprintf(__("Multiple entries for %s"),$user->ID);
     } else {
         if(count($result) == 0) { // If the user doesn't exist in the MB user table, create it.
             $message = add_MB_user($user);
-            $messages[] = "[INFO] User " . $message . "added";
             $result = $wpdb->get_results($sql);
+            $messages[] = __("[INFO]","MicroBalance") . " " . sprintf(__("User %s added","MicroBalance"),$message);
         }
         
         // Stores all the data of the content of cells in every row.
