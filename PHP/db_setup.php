@@ -31,29 +31,43 @@ $sql = "
     ) $charset_collate;
     
     CREATE TABLE $transactions_table_name (
-        transactionid mediumint PRIMARY KEY,
-        authorid mediumint NOT NULL,
+        transactionid mediumint UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+        authorid mediumint UNSIGNED NOT NULL,
         description tinytext,
-        type ENUM('purchase', 'decleration', 'payout', 'refund', 'unknown', 'error') DEFAULT 'error' NOT NULL,
+        type ENUM('inventory purchase', 'purchase', 'decleration', 'payout', 'refund', 'unknown', 'error') DEFAULT 'error' NOT NULL,
         state ENUM('new', 'unapproved', 'confirmed', 'finished', 'canceled', 'error') DEFAULT 'error' NOT NULL,
         method ENUM('internal', 'cash', 'deposit'),
         cdate datetime DEFAULT NOW() NOT NULL,
         edate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-    ) $charset_collate;
-        
-    CREATE TABLE $journal_table_name (
-        journalid mediumint PRIMARY KEY,
-        transactionid mediumint NOT NULL,
-        accountid mediumint NOT NULL,
-        cd ENUM('credit','debit','error') DEFAULT 'error' NOT NULL,
-        amount float(6,2) NOT NULL,
-        cdate datetime DEFAULT NOW() NOT NULL,
-        edate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-    ) $charset_collate;
-    ";
+    ) 
+    $charset_collate
+    ENGINE=InnoDB
+    AUTO_INCREMENT=1000000
+    ;
+       
+    CREATE TABLE `$journal_table_name` (
+	`journalid` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`transactionid` MEDIUMINT(8) UNSIGNED NOT NULL,
+	`accountid` MEDIUMINT(8) UNSIGNED NOT NULL,
+	`cd` ENUM('credit','debit','error') NOT NULL DEFAULT 'error',
+	`amount` FLOAT(6,2) NOT NULL,
+        `payed` DATETIME DEFAULT NULL,
+	`cdate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        `edate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY (`journalid`)
+    )
+    $charset_collate
+    ENGINE=InnoDB
+    AUTO_INCREMENT=5000000
+    ;";
 
 require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 dbDelta( $sql );
+
+$sql = "ALTER TABLE $transactions_table_name AUTO_INCREMENT=1000000;
+    ALTER TABLE $journal_table_name AUTO_INCREMENT=5000000;";
+
+dbDelta($sql);
 
 /*
  * @Description: Create 'till user' data if it doesn't exist yet.
