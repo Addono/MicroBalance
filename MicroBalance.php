@@ -105,7 +105,6 @@ function redirect_button($title, $target = "", $type = "secondary") {
  */
 function new_journal($amount, $account, $cd, $transactionID) {
     global $wpdb;
-    $journal_table = get_option('MB_journal_table');
     $journal_table = get_table('journal');
     
     if($cd != 'credit' && $cd != 'debit') {
@@ -128,8 +127,6 @@ function new_journal($amount, $account, $cd, $transactionID) {
 
 function pay_journal($journal_id) {
     global $wpdb;
-    $journal_table = get_option('MB_journal_table');
-    $users_table = get_option('MB_user_table');
     $journal_table = get_table('journal');
     $users_table = get_table('users');
     
