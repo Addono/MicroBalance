@@ -5,8 +5,9 @@ defined( 'ABSPATH' ) or die( 'Not Even Close, Baby' );
 echo "<h1>" . __('User manager', "MicroBalance") . "</h1>\n";
 
 global $wpdb;
+global $user_table_name;
 
-$table_name = $wpdb->prefix . 'mb_users';
+$table_name = get_option('MB_user_table');
 $charset_collate = $wpdb->get_charset_collate();
 $messages = [];
 
@@ -38,15 +39,16 @@ foreach($colums as $colum) {
 foreach($users as $user) {
     echo "<tr>\n";
     
-    $result = $wpdb->get_results("SELECT * FROM wp_mb_users WHERE id = '$user->ID';");
+    $sql = "SELECT * FROM $table_name WHERE id = '$user->ID';";
+    $result = $wpdb->get_results($sql);
     
     if(count($result) > 1) {
         $message[] = "[ERROR] Multiple entries for $user->ID";
     } else {
         if(count($result) == 0) { // If the user doesn't exist in the MB user table, create it.
             $message = add_MB_user($user);
-            $result = $wpdb->get_results("SELECT * FROM wp_mb_users WHERE id = '$user->ID';");
             $messages[] = "[INFO] User " . $message . "added";
+            $result = $wpdb->get_results($sql);
         }
         
         // Stores all the data of the content of cells in every row.
@@ -57,8 +59,8 @@ foreach($users as $user) {
             [$user->user_firstname, 'wp-admin-add','first_name'],
             [$user->user_lastname, 'wp-admin-add', 'last_name'],
             [ucfirst(__($result[0]->role,"MicroBalance")), false],
-            ["&euro;" . $result[0]->balance, false],
-            ["&euro;" . $result[0]->till, false],
+            ["&euro;" . $result[0]->debit, false],
+            ["&euro;" . $result[0]->credit, false],
             [""]
         ];
         
@@ -100,7 +102,9 @@ redirect_button(__("New user","MicroBalance"), admin_url() . "user-new.php", 'pr
 
 function add_MB_user($user) {
     global $wpdb;
-    $table_name = $wpdb->prefix . 'mb_users';;
+    global $table_name;
+    
+    echo $user_table_name;
     
     $id = $user->ID;
     $firstname = $user->user_firstname;
