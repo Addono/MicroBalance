@@ -5,7 +5,7 @@ defined( 'ABSPATH' ) or die( 'Not Even Close, Baby!' );
 /**
  * Plugin Name: MicroBalance
  * Plugin URI: 
- * Description: 
+ * Description: Small till manager.
  * Version: 0.1.1
  * Author: Adriaan Knapen <a.d.knapen@student.tue.nl>
  * Author URI: 
