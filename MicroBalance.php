@@ -92,4 +92,74 @@ function redirect_button($title, $target = "", $type = "secondary") {
     echo "<form method='post' action='$target'>\n";
     submit_button($title, $type, 'submit', false);
     echo "\n</form>\n";
+
+/*
+ * @Desciprion: Creates a new journal entry
+ * 
+ * @param amount: The value which gets transfered.
+ * @param account: Which account ID changes.
+ * @param cd: 'credit' or 'debit'.
+ * param transactionID : ID of the transaction.
+ * 
+ * @return: journalID on succes, -1 if row insertion failed, -2 if cd wasn't set properly.
+ */
+function new_journal($amount, $account, $cd, $transactionID) {
+    global $wpdb;
+    $journal_table = get_option('MB_journal_table');
+    
+    if($cd != 'credit' && $cd != 'debit') {
+        return -2;
+    }
+
+    $data = [
+        'amount' => $amount,
+        'accountid' => $account,
+        'cd' => $cd,
+        'transactionid' => $transactionID
+    ];
+    
+    if(!$wpdb->insert($journal_table, $data)) {
+        return -1;
+    }
+    
+    return $wpdb->insert_id;
+}
+
+function pay_journal($journal_id) {
+    global $wpdb;
+    $journal_table = get_option('MB_journal_table');
+    $users_table = get_option('MB_user_table');
+    
+    $sql = "SELECT accountid, cd, amount, payed FROM $journal_table WHERE journalid = $journal_id";
+    $journal_result = $wpdb->get_row($sql);
+    
+    if($journal_result == null) {
+        return -1; // Throw an error if the journal entry wasn't found.
+    }
+    
+    if($journal_result->payed != null) {
+        return 0; // Abort if the journal was already payed.
+    }
+    
+    $cd = $journal_result->cd;
+    $user_id = $journal_result->accountid;
+    
+    $sql = "SELECT $cd FROM $users_table WHERE id = $user_id";
+    $user_result = $wpdb->get_row($sql);
+    
+    if($user_result == null) {
+        return -2; // Throw an error if the user wasn't found;
+    }
+    
+    $old_balance = $user_result->$cd;
+    $new_balance = $old_balance + $journal_result->amount;
+    
+    $data = [
+        $cd => $new_balance
+    ];
+    
+    if($wpdb->update($users_table, $data, array('id' => $user_id))) {
+        $date = current_time('mysql', 0);
+        return $wpdb->update($journal_table, array('payed' => $date), array('journalid' => $journal_id));
+    }
 }
