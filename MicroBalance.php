@@ -6,7 +6,6 @@ defined( 'ABSPATH' ) or die( 'Not Even Close, Baby!' );
  * Plugin Name: MicroBalance
  * Plugin URI: 
  * Description: 
- * Version: 0.0.3
  * Author: Adriaan Knapen <a.d.knapen@student.tue.nl>
  * Author URI: 
  * License: 
