@@ -12,11 +12,16 @@ defined( 'ABSPATH' ) or die( 'Not Even Close, Baby!' );
  * License: 
  */
 
-add_action('admin_menu', 'my_plugin_menu');
+add_action('admin_menu', 'plugin_menu');
 
-function my_plugin_menu() {
-    //add_menu_page('MicroBalance Admin Panel', 'Microbalance Admin Panel', 'administrator', 'MicroBalance-settings', 'settings_page', 'dashicons-admin-generic');
-    add_menu_page(__('MicroBalance', 'MicroBalance'), 'MicroBalance', 'administrator', 'MicroBalance', 'home_page', 'dashicons-admin-generic');
+function plugin_menu() {
+    $primary_menu = "MicroBalance";
+    add_utility_page(__('Overview', 'MicroBalance'), __('Overview', 'MicroBalance'), 'administrator', $primary_menu, 'home_page', 'dashicons-admin-generic');
+    add_submenu_page($primary_menu, __('Transactions', 'MicroBalance'), __('Transactions', 'MicroBalance'), 'administrator', 'transactions', 'plugin_transactions');
+}
+
+function plugin_transactions() {
+    require_once("PHP/transactions.php");
 }
     
 function settings_page() {

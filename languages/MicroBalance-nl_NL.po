@@ -94,3 +94,12 @@ msgstr "Voorraad"
 
 msgid "Till"
 msgstr "Kas"
+
+msgid "Overview"
+msgstr "Overzicht"
+
+msgid "Transactions"
+msgstr "Transacties"
+
+msgid "New transaction"
+msgstr "Nieuwe transactie"
