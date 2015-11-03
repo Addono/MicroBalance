@@ -67,7 +67,6 @@ msgid "ID"
 msgstr "Id"
 
 msgid "%s message"
-msgstr "%s bericht"
-
-msgid "%s messages"
-msgstr "%s berichten"
+msgid_plural "%s messages"
+msgstr[0] "%s bericht"
+msgstr[1] "%s berichten"

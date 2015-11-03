@@ -132,12 +132,13 @@ function add_MB_user($user) {
     return $user_add_message;
 }
 
-
 /*
  * @Description: Shows all messages generated earlier.
  */
-if(count($messages) != 0) {
-    echo "\n<h2>" . _n('Message', 'Messages', count($messages), "MicroBalance") . "</h2>";
+$amount = count($messages);
+
+if($amount != 0) {
+    echo "<h1>" . sprintf(_n("%s message","%s messages", $amount, "MicroBalance"), $amount ) . "</h1>\n";
     
     foreach($messages as $message) {
         echo "$message<br>\n";
