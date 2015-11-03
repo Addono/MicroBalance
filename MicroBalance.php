@@ -11,12 +11,12 @@ defined( 'ABSPATH' ) or die( 'Not Even Close, Baby!' );
  * Author URI: 
  * License: 
  */
-     
+
 add_action('admin_menu', 'my_plugin_menu');
 
 function my_plugin_menu() {
     //add_menu_page('MicroBalance Admin Panel', 'Microbalance Admin Panel', 'administrator', 'MicroBalance-settings', 'settings_page', 'dashicons-admin-generic');
-    add_menu_page(__('Manage users', 'MicroBalance'), 'MicroBalance', 'administrator', 'MicroBalance-manage-users', 'manage_users', 'dashicons-admin-generic');
+    add_menu_page(__('MicroBalance', 'MicroBalance'), 'MicroBalance', 'administrator', 'MicroBalance', 'home_page', 'dashicons-admin-generic');
 }
     
 function settings_page() {
@@ -71,8 +71,9 @@ function db_setup() {
     require("PHP/db_setup.php");
 }
 
-function manage_users() {
+function home_page() {
     require_once("PHP/manage_users.php");
+    require_once("PHP/manage_till.php");
 }
 
 add_action( 'plugins_loaded', 'my_plugin_load_plugin_textdomain' );
@@ -246,4 +247,26 @@ function get_table($table) {
         default:
             return false;
     }
+}
+
+function get_till() {
+    global $wpdb;
+    
+    $table = get_table('users');
+    $sql = "SELECT credit FROM $table WHERE id = '0'";
+    
+    $result = $wpdb->get_row($sql);
+    
+    return $result->credit;
+}
+
+function get_inventory() {
+    global $wpdb;
+    
+    $table = get_table('users');
+    $sql = "SELECT debit FROM $table WHERE id = '0'";
+    
+    $result = $wpdb->get_row($sql);
+    
+    return $result->debit;
 }

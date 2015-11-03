@@ -20,7 +20,7 @@ msgid "Hello"
 msgstr "Hallo"
 
 msgid "User manager"
-msgstr "Gebruikers beheerder"
+msgstr "Gebruikers beheer"
 
 msgid "Login name"
 msgstr "Inlog naam"
@@ -47,7 +47,7 @@ msgid "Balance"
 msgstr "Tegoed"
 
 msgid "till manager"
-msgstr "kas beheerder"
+msgstr "kas beheer"
 
 msgid "Till balance"
 msgstr "Kas tegoed"
@@ -85,3 +85,12 @@ msgstr "%s meerdere keren aanwezig"
 
 msgid "Couldn't add user, row insertion failed"
 msgstr "Gebruiker niet toegevoegd, invoegen rij mislukt"
+
+msgid "Till manager"
+msgstr "Kas beheer"
+
+msgid "Inventory"
+msgstr "Voorraad"
+
+msgid "Till"
+msgstr "Kas"
