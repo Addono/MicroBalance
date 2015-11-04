@@ -312,20 +312,23 @@ function get_MB_users($exclude_self = true, $order = "id", $asc_desc = "ASC", $i
 }
 
 /*
- * @description: Returns the name of the user with the given ID.
+ * @description: Returns the full name of the user with the given ID.
  * @param id: ID from the user
- * @returns: Name from the user with the parsed ID.
+ * @returns: Full name of the user with the parsed ID.
  */
 function id_to_name($id) {
     global $wpdb;
+    $table = $wpdb->prefix . "usermeta";
     
-    $sql = "SELECT display_name FROM wp_users WHERE ID = '$id'";
+    $sql_firstname = "SELECT meta_value FROM $table WHERE user_id = '$id' && meta_key='first_name'";
+    $sql_lastname = "SELECT meta_value FROM $table WHERE user_id = '$id' && meta_key='last_name'";
     
-    $result = $wpdb->get_row($sql);
+    $firstname = $wpdb->get_row($sql_firstname)->meta_value;
+    $lastname = $wpdb->get_row($sql_lastname)->meta_value;
     
-    if($result == null) {
-        return null;
+    if($firstname != "" && $lastname != "") {
+        return $firstname . " " . $lastname;
     } else {
-        return $result->display_name;
+        return $firstname . $lastname;
     }
 }
