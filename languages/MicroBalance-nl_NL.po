@@ -145,3 +145,30 @@ msgstr "De hoeveelheid moet ingevuld zijn!"
 
 msgid "Amount can not be zero!"
 msgstr "De hoeveelheid kan niet nul zijn."
+
+msgid "Transaction"
+msgstr "Transactie"
+
+msgid "Transaction overview"
+msgstr "Transactie overzicht"
+
+msgid "Transaction %s not found."
+msgstr "Kon transactie %s niet vinden."
+
+msgid "Purchase"
+msgstr "Aankoop"
+
+msgid "Declaration"
+msgstr "Declaratie"
+
+msgid "Payout"
+msgstr "Uitbetaling"
+
+msgid "Refund"
+msgstr "Terugbetaling"
+
+msgid "Unknown"
+msgstr "Onbekend"
+
+msgid "Error"
+msgstr "Error"

@@ -359,3 +359,22 @@ function id_to_name($id) {
         return $firstname . $lastname;
     }
 }
+
+function transaction_type_to_text($type) {
+    switch($type) {
+        case 'inventory purchase':
+            return __('Inventory purchase', 'MicroBalance');
+        case 'purchase':
+            return __('Purchase', 'MicroBalance');
+        case 'decleration':
+            return __('Declaration', 'MicroBalance');
+        case 'payout':
+            return __('Payout', 'MicroBalance');
+        case 'refund':
+            return __('Refund', 'MicroBalance');
+        case 'unknown':
+            return __('Unknown', 'MicroBalance');
+        case 'error':
+            return __('Error', 'MicroBalance');
+    }
+}
