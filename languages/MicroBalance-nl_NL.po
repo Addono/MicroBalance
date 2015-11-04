@@ -193,3 +193,21 @@ msgstr "Voorraad inkoop betaald door"
 
 msgid "Payed by"
 msgstr "Betaald door"
+
+msgid "Credit"
+msgstr "Credit"
+
+msgid "Debit"
+msgstr "Debet"
+
+msgid "Credit or debit"
+msgstr "Credit of debet"
+
+msgid "Transaction %s"
+msgstr "Transactie %s"
+
+msgid "Journal entry %s"
+msgstr "Journaal %s"
+
+msgid "Account"
+msgstr "Rekening"

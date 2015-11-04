@@ -246,7 +246,7 @@ function pay_journal($journal_id) {
  * @returns: Full name of the table if found, false if it wasn't found.
  */
 function get_table($table) {
-    switch($table) {
+    switch(strtolower($table)) {
         case 'user':
         case 'users':
             return get_option('MB_user_table');
@@ -383,4 +383,89 @@ function transaction_type_to_text($type) {
         case 'error':
             return __('Error', 'MicroBalance');
     }
+}
+
+function echo_transaction($transaction_id, $header = "h2") {
+    global $wpdb;
+    $table = get_table('transactions');
+    
+    if(is_numeric($transaction_id) && is_integer($transaction_id + 0)) {
+         echo "<$header>" . sprintf(__('Transaction %s', 'MicroBalance'), $transaction_id) . "</$header>\n";
+         
+         $sql = "SELECT * FROM $table WHERE transactionid = '$transaction_id'";
+         
+         $result = $wpdb->get_row($sql);
+         
+         if($result == null) {
+             echo "<p>" . sprintf(__('Transaction %s not found.', 'MicroBalance'), $transaction_id) . "</p>";
+             return false;
+         } else {
+             $description = $result->description == "" ? "-" : $result->description;
+             
+             $rows = [
+                 __('Author','MicroBalance') => id_to_name($result->authorid),
+                 __('Description', 'MicroBalance') => $description,
+                 __('Type', 'MicroBalance') => transaction_type_to_text($result->type),
+                 __('Added on', 'MicroBalance') => $result->cdate,
+                 __('Edited on', 'MicroBalance') => $result->edate
+             ];
+             
+             two_row_table($rows);
+             
+             return true;
+         }
+    }
+}
+
+function echo_journal_entry($journal_id, $header = "h2") {
+    global $wpdb;
+    $table = get_table('journal');
+    
+    echo "<$header>" . sprintf(__('Journal entry %s', 'MicroBalance'), $journal_id) . "</$header>\n";
+    
+    if(!is_numeric($journal_id) || !is_integer($journal_id + 0)) {
+        echo "<p>" . __('Journal entry not found', 'MicroBalance') . "</p>\n";
+        return false;
+    } else {
+        $result = $wpdb->get_row("SELECT * FROM $table WHERE journalid = '$journal_id'");
+        
+        if($result == null) {
+            echo "<p>" . __('Journal entry not found', 'MicroBalance') . "</p>\n";
+            return false;
+        } else {
+            if($result->accountid != 0) {
+                $account = id_to_name($result->accountid);
+            } else {
+                if($result->cd == 'debit') {
+                    $account = __('Inventory', 'MicroBalance');
+                } else {
+                    $account = __('Till', 'MicroBalance');
+                }
+            }
+            
+            $rows = [
+                __('Account', 'MicroBalance') => $account . " ($result->accountid)",
+                __('Amount', 'MicroBalance') => "&euro;" . $result->amount,
+                __('Credit or debit', 'MicroBalance') => __(ucfirst($result->cd), 'MicroBalance'),
+                __('Added on', 'MicroBalance') => $result->cdate,
+                __('Edited on', 'MicroBalance') => $result->edate
+            ];
+            
+            two_row_table($rows);
+            
+            return true;
+        }
+    }
+}
+
+function two_row_table($rows) {
+    echo "<table>\n";
+             
+    foreach($rows as $title => $value) {
+        echo "<tr>\n";
+        echo "<td><b>$title</b><td>$value</td>";
+        echo "</tr>\n";
+    }
+             
+    echo "</table>\n";
 }
