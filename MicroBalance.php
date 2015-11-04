@@ -274,4 +274,42 @@ function get_inventory() {
     $result = $wpdb->get_row($sql);
     
     return $result->debit;
+function get_MB_users($exclude_self = true, $order = "name", $asc_desc = "ASC", $include_till = false) {
+    global $wpdb;
+    
+    if(strtolower($asc_desc) != "asc" && strtolower($asc_desc) != "desc") {
+        return -1;
+    }
+
+    $user_table = get_table('users');
+    
+    $sql = "SELECT * FROM $user_table";
+    
+    if($include_till || $exclude_self)  {
+        $sql .= " WHERE ";
+    }
+    
+    if($include_till) {
+        $sql .= "id != '0'";
+    }
+    
+    if($exclude_self) {
+        $id = get_current_user_id();
+         $sql .= " && id != '$id'";
+    }
+    
+    switch($order) {
+       case "name":
+       case "firstname":
+           $sql .= " ORDER BY firstname $asc_desc, lastname $asc_desc";
+           break;
+       case "lastname":
+           $sql .= " ORDER BY lastname $asc_desc, firstname $asc_desc";
+           break;
+       case "id":
+           $sql .= " ORDER BY id $asc_desc";
+           break;
+    }
+    
+    return $wpdb->get_results($sql);
 }
