@@ -34,7 +34,6 @@ $sql = "
         description tinytext,
         type ENUM('inventory purchase', 'purchase', 'decleration', 'payout', 'refund', 'unknown', 'error') DEFAULT 'error' NOT NULL,
         state ENUM('new', 'unapproved', 'confirmed', 'finished', 'canceled', 'error') DEFAULT 'error' NOT NULL,
-        method ENUM('internal', 'cash', 'deposit'),
         cdate datetime DEFAULT NOW() NOT NULL,
         edate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     ) 
