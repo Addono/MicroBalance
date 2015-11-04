@@ -76,7 +76,6 @@ if(count($result) == 0) {
     $till_data = [
         id => 0,
         role => 'till',
-        firstname => 'till'
     ];
     
     $wpdb->insert($user_table_name, $till_data);
