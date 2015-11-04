@@ -153,7 +153,7 @@ function new_inventory_purchase($debtor_id, $amount, $description = "", $authori
         return -3;
     } else {
         change_transaction_state($id, 'unapproved');
-        return 1;
+        return $id;
     }
 }
 
