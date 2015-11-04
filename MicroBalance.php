@@ -109,7 +109,7 @@ function new_inventory_purchase($debtor_id, $amount, $description = "", $authori
     global $wpdb;
     $transaction_table = get_table('transaction');
     
-    if($amount <= 0) {
+    if($amount <= 0 || $debtor_id == 0) { // Check if the inventory increases or if the till is the debtor.
         return -1; // Inventory value has to increase. Else throw error.
     }
     
