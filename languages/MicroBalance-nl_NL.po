@@ -103,3 +103,45 @@ msgstr "Transacties"
 
 msgid "New transaction"
 msgstr "Nieuwe transactie"
+
+msgid "Inventory purchase"
+msgstr "Voorraad inkoop"
+
+msgid "No other users found"
+msgstr "Geen andere gebruikers gevonden"
+
+msgid "Self"
+msgstr "Jij"
+
+msgid "Other"
+msgstr "Een ander"
+
+msgid "Users"
+msgstr "Gebruikers"
+
+msgid "Inventory purchase done by"
+msgstr "Inkoop gedaan door"
+
+msgid "Amount"
+msgstr "Hoeveelheid"
+
+msgid "Description"
+msgstr "Beschrijving"
+
+msgid "Accept"
+msgstr "Accepteren"
+
+msgid "Submit"
+msgstr "Toevoegen"
+
+msgid "Amount should be positive!"
+msgstr "De hoeveelheid moet positief zijn!"
+
+msgid "Amount should be a number!. Use only numbers and if necessary one dot or comma."
+msgstr "De hoeveelheid moet een nummer zijn! Gebruik alleen getallen en zo nodig één punt of comma."
+
+msgid "Amount is required!"
+msgstr "De hoeveelheid moet ingevuld zijn!"
+
+msgid "Amount can not be zero!"
+msgstr "De hoeveelheid kan niet nul zijn."
