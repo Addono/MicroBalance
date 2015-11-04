@@ -1,8 +1,9 @@
 <?php defined( 'ABSPATH' ) or die( 'Not Even Close, Baby!' );
 
-$user = filter_input(INPUT_GET,'users', FILTER_VALIDATE_INT);
+$user = filter_input(INPUT_POST,'users', FILTER_VALIDATE_INT);
+
 $amount = str_replace(',', '.', $_POST['amount']);
-$description =  filter_input(INPUT_GET,'description',FILTER_SANITIZE_SPECIAL_CHARS);
+$description =  filter_input(INPUT_POST,'description',FILTER_SANITIZE_SPECIAL_CHARS);
 $messages = [];
 $proceed = false;
 
