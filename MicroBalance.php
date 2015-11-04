@@ -274,7 +274,7 @@ function get_inventory() {
     $result = $wpdb->get_row($sql);
     
     return $result->debit;
-function get_MB_users($exclude_self = true, $order = "name", $asc_desc = "ASC", $include_till = false) {
+function get_MB_users($exclude_self = true, $order = "name", $asc_desc = "ASC", $include_till = true) {
     global $wpdb;
     
     if(strtolower($asc_desc) != "asc" && strtolower($asc_desc) != "desc") {
@@ -291,11 +291,14 @@ function get_MB_users($exclude_self = true, $order = "name", $asc_desc = "ASC", 
     
     if($include_till) {
         $sql .= "id != '0'";
+        if($exclude_self) {
+            $sql .= " &&";
+        }
     }
     
     if($exclude_self) {
         $id = get_current_user_id();
-         $sql .= " && id != '$id'";
+         $sql .= " id != '$id'";
     }
     
     switch($order) {
