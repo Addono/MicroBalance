@@ -18,10 +18,14 @@ foreach($ids as $id) {
          if($result == null) {
              echo "<p>" . sprintf(__('Transaction %s not found.', 'MicroBalance'), $id) . "</p>";
          } else {
+             $description = $result->description == "" ? "-" : $result->description;
+             
              $rows = [
-                 'Author' => id_to_name($result->authorid),
-                 'Description' => $result->description,
-                 'Added on' => $result->cdate
+                 __('Author','MicroBalance') => id_to_name($result->authorid),
+                 __('Description', 'MicroBalance') => $description,
+                 __('Type', 'MicroBalance') => transaction_type_to_text($result->type),
+                 __('Added on', 'MicroBalance') => $result->cdate,
+                 __('Edited on', 'MicroBalance') => $result->edate
              ];
              echo "<table>\n";
              

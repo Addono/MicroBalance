@@ -172,3 +172,18 @@ msgstr "Onbekend"
 
 msgid "Error"
 msgstr "Error"
+
+msgid "Author"
+msgstr "Auteur"
+
+msgid "Type"
+msgstr "Soort"
+
+msgid "Added on"
+msgstr "Toegevoegd op"
+
+msgid "Edited on"
+msgstr "Aangepast op"
+
+msgid "Inventory purchase payed by"
+msgstr "Voorraad inkoop betaald door"

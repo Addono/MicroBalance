@@ -1,8 +1,8 @@
 <?php defined( 'ABSPATH' ) or die( 'Not Even Close, Baby!' );
 
-$user = $_POST['users'];
+$user = filter_input(INPUT_GET,'users', FILTER_VALIDATE_INT);
 $amount = str_replace(',', '.', $_POST['amount']);
-$description = $_POST['description'];
+$description =  filter_input(INPUT_GET,'description',FILTER_SANITIZE_SPECIAL_CHARS);
 $messages = [];
 $proceed = false;
 
@@ -27,7 +27,7 @@ if($user != "" || $amount != "" || $decription != "") {
 <h1><?php _e("Inventory purchase", "MicroBalance"); ?></h1>
     <form method="post">
         <div style='float:left'>
-            <h2><?php _e('Inventory purchase done by', 'MicroBalance'); ?></h2>
+            <h2><?php _e('Inventory purchase payed by', 'MicroBalance'); ?></h2>
                 <?php get_user_selector(false, "users"); ?>
         </div>
 
