@@ -20,8 +20,6 @@ $charset_collate = $wpdb->get_charset_collate();
 $sql = "
     CREATE TABLE $user_table_name (
         id mediumint NOT NULL,
-        firstname tinytext NOT NULL,
-        lastname tinytext,
         debit float(10,2) DEFAULT '0' NOT NULL,
         credit float(10,2) DEFAULT '0' NOT NULL,
         role ENUM('till manager', 'user', 'till') DEFAULT 'user' NOT NULL,

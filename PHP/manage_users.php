@@ -110,8 +110,6 @@ function add_MB_user($user) {
     
     $userdata = [
         'id' => $id,
-        'firstname' => $firstname,
-        'lastname' => $lastname
             ];
             
     if(!$wpdb->insert($table_name,$userdata)) {
