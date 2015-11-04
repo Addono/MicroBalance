@@ -275,6 +275,33 @@ function get_inventory() {
     
     return $result->debit;
 }
+
+function get_user_selector($exclude_self, $group_name) {
+    global $wpdb;
+    
+    $users = get_MB_users(true,'id','asc');
+    $id = get_current_user_id();
+    $name = id_to_name($id);
+    
+    if(!$exclude_self) {
+        echo "<b>" . __('Self', 'MicroBalance') . "</b></br>\n";
+        echo "<label><input type='radio' name='$group_name' value='$id' checked>$name</label><br>\n";
+        echo "<p><b>" . __('Other', 'MicroBalance') . "</b></br>\n";
+    } else {
+        echo "<p><b>" . __('Users', 'MicroBalance') . "</b><br>\n";
+    }
+    
+    if(count($users) == 0) {
+        echo "<p>" . __n("No other users found", "MicroBalance") . "</p>";
+    } else {
+        foreach($users as $user) {
+            $name = id_to_name($user->id);
+
+            echo "<label><input type='radio' name='$group_name' value='$user->id'>$name</label><br>\n";
+        }
+    }
+}
+
 function get_MB_users($exclude_self = true, $order = "id", $asc_desc = "ASC", $include_till = true) {
     global $wpdb;
     
