@@ -311,6 +311,11 @@ function get_MB_users($exclude_self = true, $order = "id", $asc_desc = "ASC", $i
     return $wpdb->get_results($sql);
 }
 
+/*
+ * @description: Returns the name of the user with the given ID.
+ * @param id: ID from the user
+ * @returns: Name from the user with the parsed ID.
+ */
 function id_to_name($id) {
     global $wpdb;
     
