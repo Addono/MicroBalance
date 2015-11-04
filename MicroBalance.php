@@ -275,6 +275,7 @@ function get_inventory() {
     
     return $result->debit;
 }
+function get_MB_users($exclude_self = true, $order = "id", $asc_desc = "ASC", $include_till = true) {
     global $wpdb;
     
     if(strtolower($asc_desc) != "asc" && strtolower($asc_desc) != "desc") {
@@ -308,3 +309,18 @@ function get_inventory() {
     }
     
     return $wpdb->get_results($sql);
+}
+
+function id_to_name($id) {
+    global $wpdb;
+    
+    $sql = "SELECT display_name FROM wp_users WHERE ID = '$id'";
+    
+    $result = $wpdb->get_row($sql);
+    
+    if($result == null) {
+        return null;
+    } else {
+        return $result->display_name;
+    }
+}
