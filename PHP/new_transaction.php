@@ -31,7 +31,7 @@ if($user != "" || $amount != "" || $decription != "") {
 <h1><?php _e("Inventory purchase", "MicroBalance"); ?></h1>
     <form method="post">
         <div style='float:left'>
-            <h2><?php _e('Inventory purchase payed by', 'MicroBalance'); ?></h2>
+            <h2><?php _e('Payed by', 'MicroBalance'); ?></h2>
                 <?php get_user_selector(false, "users"); ?>
         </div>
 
