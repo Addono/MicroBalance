@@ -17,11 +17,11 @@ add_action('admin_menu', 'plugin_menu');
 function plugin_menu() {
     $primary_menu = "MicroBalance";
     add_utility_page(__('Overview', 'MicroBalance'), __('Overview', 'MicroBalance'), 'administrator', $primary_menu, 'home_page', 'dashicons-admin-generic');
-    add_submenu_page($primary_menu, __('Transactions', 'MicroBalance'), __('Transactions', 'MicroBalance'), 'administrator', 'transactions', 'plugin_transactions');
+    add_submenu_page($primary_menu, __('Transactions', 'MicroBalance'), __('Transactions', 'MicroBalance'), 'administrator', 'new-transaction', 'plugin_transactions');
 }
 
 function plugin_transactions() {
-    require_once("PHP/transactions.php");
+    require_once("PHP/new_transaction.php");
 }
     
 function settings_page() {

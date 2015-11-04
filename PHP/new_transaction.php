@@ -19,6 +19,8 @@ if($user != "" || $amount != "" || $decription != "") {
     
     if(count($messages) == 0) {
         $proceed = true;
+        
+        new_inventory_purchase($user, $amount, $description, get_current_user_id());
     }
 }
 ?>
