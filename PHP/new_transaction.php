@@ -20,8 +20,11 @@ if($user != "" || $amount != "" || $decription != "") {
     
     if(count($messages) == 0) {
         $proceed = true;
+        $transaction = new_inventory_purchase($user, $amount, $description, get_current_user_id());
         
-        new_inventory_purchase($user, $amount, $description, get_current_user_id());
+        if($transaction > 0) {
+            echo "<p>" . sprintf(__('Transaction %s succesfully added.', 'MicroBalance'), $transaction) . "</p>";
+        }
     }
 }
 ?>
