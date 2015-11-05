@@ -12,6 +12,13 @@ defined( 'ABSPATH' ) or die( 'Not Even Close, Baby!' );
  * License: 
  */
 
+add_action( 'admin_init', 'myplugin_scripts' ); // Enque style if user is in the admin panel.
+
+function myplugin_scripts() {
+    wp_register_style( 'MB-style',  plugin_dir_url( __FILE__ ) . 'css/style.css' );
+    wp_enqueue_style( 'MB-style' );
+}
+
 add_action('admin_menu', 'plugin_menu');
 
 function plugin_menu() {
