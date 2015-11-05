@@ -141,19 +141,9 @@ function new_inventory_purchase($debtor_id, $amount, $description = "", $authori
     $debtor_journal_id = new_journal(-$amount, $debtor_id, 'credit', $id);   // Create journal entry for the debtor.
     
     if($inventory_journal_id > 0 && $debtor_journal_id > 0) {
-        $data = [
-            'state' => 'unapproved'
-        ];
+        change_transaction_state($transaction_id, 'unapproved');
     } else {
-        $data = [
-            'state' => 'error'
-        ];
-    }
-    
-    $wpdb->update($transaction_table, $data, array('transactionid' => $transaction_id));
-    
-    if($data['state'] == 'error') {
-        $wpdb->update($transaction_table,array('state' => 'error'), array('transactionid' => $transaction_id));
+        change_transaction_state($transaction_id, 'error');
         return -2;
     }
     
@@ -202,7 +192,8 @@ function new_transaction($type,$description = "", $authorid = "") {
 
 function change_transaction_state($id, $state) {
     global $wpdb;
-    return $wpdb->update($transaction_table,array('state' => $state), array('transactionid' => $id));
+    
+    return $wpdb->update(get_table('transaction'), array('state' => $state), array('transactionid' => $transaction_id));
 }
 
 function set_transaction_state($state) {
