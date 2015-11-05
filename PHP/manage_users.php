@@ -22,8 +22,8 @@ echo "<table>\n";
 
 $colums = [
     __('ID', "MicroBalance"),
-    __('Login name', "MicroBalance"),
-    __('Email', "MicroBalance"),
+    //__('Login name', "MicroBalance"),
+    //__('Email', "MicroBalance"),
     __('First name', "MicroBalance"),
     __('Last name', "MicroBalance"),
     __('Role', "MicroBalance"),
@@ -53,8 +53,8 @@ foreach($users as $user) {
         // Stores all the data of the content of cells in every row.
         $cells = [
             [$user->ID, false],
-            [$user->user_login, false],
-            [$user->user_email, 'wp-admin-edit', 'email'],
+            //[$user->user_login, false],
+            //[$user->user_email, 'wp-admin-edit', 'email'],
             [$user->user_firstname, 'wp-admin-add','first_name'],
             [$user->user_lastname, 'wp-admin-add', 'last_name'],
             [ucfirst(__($result[0]->role,"MicroBalance")), false],
