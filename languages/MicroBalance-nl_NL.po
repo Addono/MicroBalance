@@ -50,7 +50,7 @@ msgid "till manager"
 msgstr "kas beheer"
 
 msgid "Till balance"
-msgstr "Kas tegoed"
+msgstr "Schuld t.o.v. de kas"
 
 msgctxt "add-data"
 msgid "Add"
