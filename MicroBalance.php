@@ -131,9 +131,11 @@ function new_inventory_purchase($debtor_id, $amount, $description = "", $authori
         'authorid' => $authorid
     ];
     
-    $wpdb->insert($transaction_table,$data);
+    $transaction_id = new_transaction('inventory_purchase', $description, $authorid);
     
-    $id = $wpdb->insert_id;
+    if($transaction_id < 0) {
+        return -3;
+    }
     
     $inventory_journal_id = new_journal($amount, 0, 'debit', $id);           // Create journal entry for the inventory.
     $debtor_journal_id = new_journal(-$amount, $debtor_id, 'credit', $id);   // Create journal entry for the debtor.
@@ -148,20 +150,54 @@ function new_inventory_purchase($debtor_id, $amount, $description = "", $authori
         ];
     }
     
-    $wpdb->update($transaction_table, $data, array('transactionid' => $id));
+    $wpdb->update($transaction_table, $data, array('transactionid' => $transaction_id));
     
     if($data['state'] == 'error') {
-        $wpdb->update($transaction_table,array('state' => 'error'), array('transactionid' => $id));
+        $wpdb->update($transaction_table,array('state' => 'error'), array('transactionid' => $transaction_id));
         return -2;
     }
     
     if(!pay_journal($inventory_journal_id) || !pay_journal($debtor_journal_id)) {
-        change_transaction_state($id, 'error');
+        change_transaction_state($transaction_id, 'error');
         return -3;
     } else {
-        change_transaction_state($id, 'unapproved');
-        return $id;
+        change_transaction_state($transaction_id, 'unapproved');
+        return $transaction_id;
     }
+}
+
+    }
+function new_transaction($type,$description = "", $authorid = "") {
+    global $wpdb;
+    
+    switch($type) {
+        case 'inventory purchase':
+        case 'purchase':
+        case 'decleration':
+        case 'refund':
+        case 'upgrade':
+        case 'unknown':
+            break;
+        default:
+            return -1;
+    }
+        
+    if($authorid == "") {
+        $authorid = get_current_user_id();
+    }
+    
+    $data = [
+        'type' => $type,
+        'state' => 'new',
+        'description' => $description,
+        'authorid' => $authorid
+    ];
+    
+     if($wpdb->insert($transaction_table,$data) == null) {
+         return -2;
+     } else {
+         return $wpdb->insert_id;
+     }
 }
 
 function change_transaction_state($id, $state) {
