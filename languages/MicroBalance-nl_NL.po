@@ -74,6 +74,11 @@ msgid_plural "%s messages"
 msgstr[0] "%s bericht"
 msgstr[1] "%s berichten"
 
+msgid "Only one transaction found."
+msgid_plural "Showing the latest %s transactions."
+msgstr[0] "Maar één transactie gevonden."
+msgstr[1] "De laatste %s transacties worden getoond."
+
 msgid "User %s added"
 msgstr "Gebruiker %s toegevoegd"
 
