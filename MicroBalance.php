@@ -374,7 +374,7 @@ function get_user_selector($exclude_self, $group_name) {
     }
     
     if(count($users) == 0) {
-        echo "<p>" . __n("No other users found", "MicroBalance") . "</p>";
+        echo "<p>" . __("No other users found", "MicroBalance") . "</p>";
     } else {
         foreach($users as $user) {
             $name = id_to_name($user->id);
