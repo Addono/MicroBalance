@@ -33,7 +33,7 @@ $sql = "
         authorid mediumint UNSIGNED NOT NULL,
         description tinytext,
         type ENUM('inventory purchase', 'purchase', 'decleration', 'payout', 'refund', 'upgrade', 'unknown', 'error') DEFAULT 'error' NOT NULL,
-        state ENUM('new', 'unapproved', 'confirmed', 'finished', 'canceled', 'error') DEFAULT 'error' NOT NULL,
+        state ENUM('new', 'unapproved', 'confirmed', 'finished', 'canceled', 'error', 'not payed') DEFAULT 'error' NOT NULL,
         cdate datetime DEFAULT NOW() NOT NULL,
         edate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     ) 
