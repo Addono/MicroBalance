@@ -217,8 +217,11 @@ msgstr "Journaal %s"
 msgid "Account"
 msgstr "Rekening"
 
-msgid "Inventory purchase of %s by %s succesfully registered under transaction %d."
+msgid "Inventory purchase of %s by %s succesfully registered as transaction %d."
 msgstr "Voorraad inkoop voor %s door %s is geregistreerd als transactie %d."
 
 msgid "Something went wrong, inventory purchase not added."
 msgstr "Er ging iets fout, voorraad inkoop niet verwerkt."
+
+msgid "Upgrade"
+msgstr "Opwaarderen"
