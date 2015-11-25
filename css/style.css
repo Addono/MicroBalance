@@ -6,3 +6,8 @@ div.transaction {
 
 div.journal {
 }
+
+div.transaction_type {
+    float: outside;
+    overflow: hidden;
+}
