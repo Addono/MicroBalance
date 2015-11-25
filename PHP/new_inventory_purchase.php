@@ -25,7 +25,7 @@ if($_POST['type'] == "inventory purchase") {
             $transaction = new_inventory_purchase($user, $amount, $description, get_current_user_id());
 
             if($transaction > 0) {
-                echo "<p>" . sprintf(__('Inventory purchase of %s by %s succesfully registered under transaction %d.', 'MicroBalance'), "&euro;" . number_format($amount,2), id_to_name($user), $transaction) . "</p>";
+                echo "<p>" . sprintf(__('Inventory purchase of %s by %s succesfully registered as transaction %d.', 'MicroBalance'), "&euro;" . number_format($amount,2), id_to_name($user), $transaction) . "</p>";
             } else {
                 echo "<p>" . __('Something went wrong, inventory purchase not added.', 'MicroBalance') . "</p>\n";
             }
@@ -35,7 +35,7 @@ if($_POST['type'] == "inventory purchase") {
 ?>
 <h1><?php _e("Inventory purchase", "MicroBalance"); ?></h1>
     <form method="post">
-        <div style='float:left'>
+        <div>
             <h2><?php _e('Payed by', 'MicroBalance'); ?></h2>
                 <?php get_user_selector(false, "users"); ?>
         </div>
