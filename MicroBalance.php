@@ -312,7 +312,7 @@ function pay_journal($journal_id) {
     
     if($wpdb->update($users_table, $data, array('id' => $user_id))) {
         $date = current_time('mysql', 0);
-        return $wpdb->update($journal_table, array('payed' => $date), array('journalid' => $journal_id));
+        return $wpdb->update($journal_table, array('payed' => $date, 'new_balance' => $new_balance), array('journalid' => $journal_id));
     }
 }
 

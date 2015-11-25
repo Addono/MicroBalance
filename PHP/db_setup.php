@@ -48,6 +48,7 @@ $sql = "
 	`accountid` MEDIUMINT(8) UNSIGNED NOT NULL,
 	`cd` ENUM('credit','debit','error') NOT NULL DEFAULT 'error',
 	`amount` FLOAT(6,2) NOT NULL,
+        `new_balance` FLOAT(10,2),
         `payed` DATETIME DEFAULT NULL,
 	`cdate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
         `edate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
