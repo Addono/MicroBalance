@@ -1,13 +1,65 @@
-div.transaction {
-    float: left;
-    margin-right: 1em;
-    margin-bottom: 2em;
-}
-
 div.journal {
 }
 
+
 div.transaction_type {
+    width: 100%;
     float: outside;
-    overflow: hidden;
+}
+
+div.inputDiv {
+    float: left;
+    width: 98%;
+}
+
+div.inputDiv input[type=text] {
+    width: 100%;
+}
+
+div.inputDiv textArea {
+    width: 100%;
+}
+
+div.submit {
+    float: bottom;
+    width: 100%;
+}
+
+@media (max-width:600px) {
+    div {
+        background-color: lightskyblue;
+    }
+    
+    div.transaction_type {
+        width: 100%;
+        float: outside;
+    }
+    
+    div.inputDiv {
+        float: left;
+        width: 98%;
+    }
+    
+    div.inputDiv input[type=text] {
+        width: 100%;
+    }
+
+    div.inputDiv textArea {
+        width: 100%;
+    }
+    
+    div.submit {
+        float: bottom;
+        width: 100%;
+    }
+}
+
+@media(min-width:600px) and (max-width: 1200px) {
+    div.transaction_type {
+        float: left;
+        padding-right: 2em;
+        margin-right: 1em;
+        margin-bottom: 2em;
+        background-color: lightgreen;
+    }
 }
