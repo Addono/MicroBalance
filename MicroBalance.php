@@ -17,6 +17,9 @@ add_action( 'admin_init', 'myplugin_scripts' ); // Enque style if user is in the
 function myplugin_scripts() {
     wp_register_style( 'MB-style',  plugin_dir_url( __FILE__ ) . 'css/style.css' );
     wp_enqueue_style( 'MB-style' );
+    
+    wp_register_style( 'jQuery-UI-style',  "//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" );
+    wp_enqueue_style('jQuery-UI-style');
 }
 
 add_action('admin_menu', 'plugin_menu');
@@ -361,27 +364,46 @@ function get_inventory() {
 function get_user_selector($exclude_self, $group_name) {
     global $wpdb;
     
+    wp_enqueue_script('jquery');
+    wp_enqueue_script('jquery-ui-core');
+    wp_enqueue_script('jquery-ui-accordion');
+    
     $users = get_MB_users(true,'id','asc');
     $id = get_current_user_id();
-    $name = id_to_name($id);
-    
+    $name = id_to_name($id);?>
+
+<script>
+    jQuery(document).ready(function() {
+       jQuery("#<?php echo $group_name;?>_accordion").accordion({
+           collapsible: false,
+           heightStyle: 'content',
+           animate: 100
+       });
+    });
+</script>
+    <?php
     if(!$exclude_self) {
-        echo "<b>" . __('Self', 'MicroBalance') . "</b></br>\n";
-        echo "<label><input type='radio' name='$group_name' value='$id' checked>$name</label><br>\n";
-        echo "<p><b>" . __('Other', 'MicroBalance') . "</b></br>\n";
+        echo "<div id='$group_name" . "_accordion'>\n";
+        echo "<h3>" . __('Your self', 'MicroBalance') . "</h3>\n";
+        echo "<div><label>\n\t<input type='radio' name='$group_name' value='$id' checked>$name\n</label></div>\n";
+        echo "<h3><b>" . __('Other', 'MicroBalance') . "</b></h3>\n";
     } else {
-        echo "<p><b>" . __('Users', 'MicroBalance') . "</b><br>\n";
+        echo "<div id='$group_name" . "_accordion'>\n";
+        echo "<h3><b>" . __('Users', 'MicroBalance') . "</b></h3>\n";
     }
     
+    echo "<div>";
     if(count($users) == 0) {
-        echo "<p>" . __("No other users found", "MicroBalance") . "</p>";
+        echo "<div><p>" . __("No other users found", "MicroBalance") . "</p></div>";
     } else {
         foreach($users as $user) {
             $name = id_to_name($user->id);
 
-            echo "<label><input type='radio' name='$group_name' value='$user->id'>$name</label><br>\n";
+            echo "\n<div>\n\t<label><input type='radio' name='$group_name' value='$user->id'>$name</label>\n</div>\n";
         }
     }
+    
+    echo "</div></div>"; // Close the accordion's div.
 }
 
 function get_MB_users($exclude_self = true, $order = "id", $asc_desc = "ASC", $include_till = true) {

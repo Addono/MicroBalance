@@ -225,3 +225,6 @@ msgstr "Er ging iets fout, voorraad inkoop niet verwerkt."
 
 msgid "Upgrade"
 msgstr "Opwaarderen"
+
+msgid "Your self"
+msgstr "Jij zelf"
