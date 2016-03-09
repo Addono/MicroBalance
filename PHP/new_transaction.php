@@ -7,11 +7,28 @@ $messages = [];
 wp_enqueue_script('jquery');
 wp_enqueue_script('jquery-ui-core');
 wp_enqueue_script('jquery-ui-tabs');
+
+$tab = "#" . $_GET['t'];
+
+switch($tab) {
+    case "#inventory_purchase":
+    case "#new_upgrade":
+        break;
+    default:
+        $tab = false;
+}
 ?>
 
 <script>
     jQuery(document).ready(function() {
-       jQuery("#tabs").tabs();
+        // Create all tabs.
+        jQuery("#tabs").tabs();
+        
+        <?php if($tab) { ?>
+        // Switch to the selected tab.
+        var index = jQuery('#tabs a[href="<?php echo $tab; ?>"]').parent().index();
+        jQuery("#tabs").tabs("option", "active", index);
+        <?php } ?>
     });
 </script>
 <div id="tabs">
