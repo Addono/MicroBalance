@@ -158,18 +158,19 @@ function new_inventory_purchase($debtor_id, $amount, $description = "", $authori
         return -2;
     }
     
-    $inventory_journal_id = new_journal($amount, 0, 'debit', $id);           // Create journal entry for the inventory.
-    $debtor_journal_id = new_journal(-$amount, $debtor_id, 'credit', $id);   // Create journal entry for the debtor.
+    echo $inventory_journal_id = new_journal($amount, 0, 'debit', $transaction_id);           // Create journal entry for the inventory.
+    echo $debtor_journal_id = new_journal(-$amount, $debtor_id, 'credit', $transaction_id);   // Create journal entry for the debtor.
     
     // Check if both journals where created.
     if($inventory_journal_id > 0 && $debtor_journal_id > 0) {
         change_transaction_state($transaction_id, 'not payed');
     } else {
+        echo "<p>Test</p>";
         change_transaction_state($transaction_id, 'error');
         return -3;
     }
     
-    // Check if both journals where succesfullypayed.
+    // Check if both journals where succesfully payed.
     if(pay_journal($inventory_journal_id) && pay_journal($debtor_journal_id)) {
         change_transaction_state($transaction_id, 'unapproved');
         return $transaction_id;
@@ -225,6 +226,7 @@ function new_payment($payed_by, $received_payment, $amount, $description = "", $
 function new_transaction($type,$description = "", $authorid = "") {
     global $wpdb;
     
+    // Check if the type is correct.
     switch($type) {
         case 'inventory purchase':
         case 'purchase':
