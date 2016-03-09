@@ -7,7 +7,7 @@ global $wpdb;
 $ids = explode(':', $_GET['id']);
 
 if($ids[0] == "") {
-    $result = $wpdb->get_results("SELECT * FROM " . get_table('transactions') . " ORDER BY transactionid DESC LIMIT 20");
+    $result = $wpdb->get_results("SELECT * FROM " . get_table('transactions') . " WHERE state!='error' ORDER BY transactionid DESC LIMIT 20");
     
     if($result[0] == "") {
         echo "<h2><i>" . __('No transactions found.', 'MicroBalance') . "</i></h2>\n";
@@ -35,5 +35,6 @@ foreach($ids as $id) {
     }
     
     echo "</div>\n";
+    echo "<hr>";
 }
 ?>
