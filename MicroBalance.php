@@ -12,14 +12,32 @@ defined( 'ABSPATH' ) or die( 'Not Even Close, Baby!' );
  * License: 
  */
 
+
+add_action('admin_head', 'hook_javascript');
+
+function hook_javascript() {
+    wp_enqueue_script('jquery');
+    wp_enqueue_script('jquery-ui-core');
+    wp_enqueue_script('jquery-ui-tooltip');
+    ?>
+<script>
+    var MicroBalanceTooltips = jQuery( "[tooltip]" ).tooltip({
+      position: {
+        my: "left top",
+        at: "right+5 top-5"
+      }
+    });
+</script>
+<?php }
+
 add_action( 'admin_init', 'myplugin_scripts' ); // Enque style if user is in the admin panel.
 
 function myplugin_scripts() {
+    wp_register_style( 'jQuery-UI-style',  plugin_dir_url( __FILE__ ) . 'css/jquery-ui-black-tie.css' );
+    wp_enqueue_style('jQuery-UI-style');
+    
     wp_register_style( 'MB-style',  plugin_dir_url( __FILE__ ) . 'css/style.css' );
     wp_enqueue_style( 'MB-style' );
-    
-    wp_register_style( 'jQuery-UI-style',  "//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" );
-    wp_enqueue_style('jQuery-UI-style');
 }
 
 add_action('admin_menu', 'plugin_menu');
@@ -143,6 +161,7 @@ function new_inventory_purchase($debtor_id, $amount, $description = "", $authori
     $inventory_journal_id = new_journal($amount, 0, 'debit', $id);           // Create journal entry for the inventory.
     $debtor_journal_id = new_journal(-$amount, $debtor_id, 'credit', $id);   // Create journal entry for the debtor.
     
+    // Check if both journals where created.
     if($inventory_journal_id > 0 && $debtor_journal_id > 0) {
         change_transaction_state($transaction_id, 'not payed');
     } else {
@@ -150,6 +169,7 @@ function new_inventory_purchase($debtor_id, $amount, $description = "", $authori
         return -3;
     }
     
+    // Check if both journals where succesfullypayed.
     if(pay_journal($inventory_journal_id) && pay_journal($debtor_journal_id)) {
         change_transaction_state($transaction_id, 'unapproved');
         return $transaction_id;
@@ -364,8 +384,7 @@ function get_inventory() {
 function get_user_selector($exclude_self, $group_name) {
     global $wpdb;
     
-    wp_enqueue_script('jquery');
-    wp_enqueue_script('jquery-ui-core');
+    // Import jQuery and jQuery UI.
     wp_enqueue_script('jquery-ui-accordion');
     
     $users = get_MB_users(true,'id','asc');
@@ -375,7 +394,7 @@ function get_user_selector($exclude_self, $group_name) {
 <script>
     jQuery(document).ready(function() {
        jQuery("#<?php echo $group_name;?>_accordion").accordion({
-           collapsible: false,
+           collapsible: true,
            heightStyle: 'content',
            animate: 100
        });

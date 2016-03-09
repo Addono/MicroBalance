@@ -7,7 +7,6 @@ $messages = [];
 wp_enqueue_script('jquery');
 wp_enqueue_script('jquery-ui-core');
 wp_enqueue_script('jquery-ui-tabs');
-wp_enqueue_script('jquery-ui-tabs');
 ?>
 
 <script>
@@ -18,7 +17,7 @@ wp_enqueue_script('jquery-ui-tabs');
 <div id="tabs">
     <ul>
         <li><a href="#inventory_purchase">inventory purchase</a>
-        <li><a href="#new_upgrade">New upgrade</a>
+        <li><a href="#new_upgrade" tooltip="Test">New upgrade</a>
     </ul>
     <div id="inventory_purchase" class="transaction_type">
         <?php require('new_inventory_purchase.php'); ?>
