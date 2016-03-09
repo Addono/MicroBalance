@@ -3,16 +3,16 @@
 defined( 'ABSPATH' ) or die( 'Not Even Close, Baby!' );
 
 $messages = [];
-//echo new_payment(1, 2, 5, "Placeholder");
+
 wp_enqueue_script('jquery');
 wp_enqueue_script('jquery-ui-core');
 wp_enqueue_script('jquery-ui-tabs');
 
-$tab = "#" . $_GET['t'];
-
-switch($tab) {
-    case "#inventory_purchase":
-    case "#new_upgrade":
+// Get which tab should be shown by default.
+switch($_GET['t']) {
+    case "inventory_purchase":
+    case "new_upgrade":
+        $tab = "#" . $_GET['t'];
         break;
     default:
         $tab = false;
