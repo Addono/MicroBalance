@@ -403,7 +403,7 @@ function get_user_selector($exclude_self, $group_name) {
     <?php
     if(!$exclude_self) {
         echo "<div id='$group_name" . "_accordion'>\n";
-        echo "<h3>" . __('Your self', 'MicroBalance') . "</h3>\n";
+        echo "<h3>" . __('Yourself', 'MicroBalance') . "</h3>\n";
         echo "<div><label>\n\t<input type='radio' name='$group_name' value='$id' checked>$name\n</label></div>\n";
         echo "<h3><b>" . __('Other', 'MicroBalance') . "</b></h3>\n";
     } else {
