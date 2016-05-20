@@ -7,3 +7,5 @@ To-do:
  - Add payout and upgrade functions and forms.
  - Add purchase function and form.
  - Add cost split function and form.
+
+# DEVELOPMENT STOPPED
