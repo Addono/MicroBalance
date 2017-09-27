@@ -1,4 +1,7 @@
-# MicroBalance
+# DISCONTINUED
+Project replaced with the Lisa project (https://addono.github.com/lisa).
+
+## MicroBalance
 Wordpress plugin for small scale balance and transaction management.
 
 To-do:
@@ -7,5 +10,3 @@ To-do:
  - Add payout and upgrade functions and forms.
  - Add purchase function and form.
  - Add cost split function and form.
-
-# DEVELOPMENT STOPPED
